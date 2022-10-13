@@ -1,0 +1,119 @@
+{{!learning-i18n-resource}}
+{{t-def "User Deletion" key="user_deletion_title"}}
+{{t-def "Delete multiple users and all their associated data from LinkedIn Learning." key="user_deletion_subheader"}}
+{{t-def "Expand User Deletion" key="a11y_caret"}}
+{{t-def "Delete users" key="delete_users"}}
+{{t-def "New" key="new_label"}}
+
+{{!-- Table --}}
+{{t-def "Job ID" key="table_column_job_id"}}
+{{t-def "Submitted by" key="table_column_submitted_by"}}
+{{t-def "Status" key="table_column_status"}}
+{{t-def "Deleted users" key="table_column_deleted_users"}}
+{{t-def "Total records" key="total_records"}}
+
+<section aria-label={{t "user_deletion_title"}} class="authentication__header {{if this.isExpanded "expanded"}}">
+  <div class="authentication__header-content">
+    <h4 class="t-20 t-bold">
+      {{t "user_deletion_title"}}
+      {{!-- TODO Remove this after successful launch of GDPR Bulk Delete --}}
+      <span class="authentication__cta-new-badge">{{t "new_label"}}</span>
+    </h4>
+    <p class="t-14 t-black--light">{{t "user_deletion_subheader"}}</p>
+  </div>
+  <CPages::Settings::Authentication::ContainerToggleButton aria-controls="user-deletion"
+    data-test-user-deletion-drawer-toggle
+    data-control-name="user_deletion__toggle"
+    onclick={{fn (mut this.isExpanded) (not this.isExpanded)}}
+    @isExpanded={{this.isExpanded}}>
+    <span class="a11y-text">{{t "a11y_caret"}}</span>
+  </CPages::Settings::Authentication::ContainerToggleButton>
+</section>
+
+<section class="authentication__content {{if this.isExpanded "expanded"}}">
+  <div class="flex-between">
+    <ArtdecoButton
+      data-test-gdpr-delete-main-cta
+      data-control-name="user_deletion__launch_csv"
+      @size={{2}}
+      @text={{t "delete_users"}}
+      @type="primary"
+      @click={{fn (mut this.showCsvUploadModal) true}}
+    />
+  </div>
+
+  {{#if this.shouldShowTable}}
+    <div class="user-deletion__table-wrapper">
+      {{#let
+        (hash
+          keyMapping=(component "c-pages/settings/authentication/user-deletion/key-mapping" onDownloadCsv=this.downloadCsvFile)
+        )
+        (hash
+          propertyName="jobId"
+          title=(t "table_column_job_id")
+          disableSorting=true
+          component="keyMapping"
+        )
+        (hash
+          propertyName="submittedBy"
+          title=(t "table_column_submitted_by")
+          disableSorting=true
+          component="keyMapping"
+        )
+        (hash
+          propertyName="totalRecords"
+          title=(t "total_records")
+          disableSorting=true
+          component="keyMapping"
+        )
+        (hash
+          propertyName="status"
+          title=(t "table_column_status")
+          disableSorting=true
+          component="keyMapping"
+        )
+        (hash
+          propertyName="deletedUsers"
+          title=(t "table_column_deleted_users")
+          disableSorting=true
+          component="keyMapping"
+        )
+        (hash
+          propertyName="resultCsvUrl"
+          title=""
+          disableSorting=true
+          component="keyMapping"
+        )
+        as |columnComponents jobIdColumn submittedbyColumn totalColumn statusColumn deletedUsersColumn downloadColumn|
+      }}
+        {{#if this.fetchedGdprJobList.length}}
+          <div class="user-deletion__table-wrapper">
+            <ModelsTable
+              data-test-user-deletion-table
+              class="user-deletion__table"
+              @data={{this.fetchedGdprJobList}}
+              @columnComponents={{columnComponents}}
+              @columns={{array jobIdColumn submittedbyColumn totalColumn statusColumn deletedUsersColumn downloadColumn}}
+              @themeInstance={{this.tableTheme}}
+              @showColumnsDropdown={{false}}
+              @showGlobalFilter={{false}}
+              @showPageSize={{false}}
+              @useFilteringByColumns={{false}}
+              @useNumericPagination={{false}}
+            />
+          </div>
+        {{/if}}
+      {{/let}}
+    </div>
+  {{/if}}
+</section>
+
+{{!-- CSV Modal --}}
+{{#if this.showCsvUploadModal}}
+  <Shared::Eis::CsvUpload
+    @isForGdprDelete={{true}}
+    @showCsvUploadModal={{this.showCsvUploadModal}}
+    @currentSection="onboard"
+    @onGdprDeleteConfirm={{perform this.fetchGdprJobList}}
+  />
+{{/if}}

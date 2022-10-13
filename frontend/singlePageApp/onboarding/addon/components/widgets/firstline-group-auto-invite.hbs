@@ -1,0 +1,46 @@
+{{!voyager-i18n-resource}}
+{{t-def "Here\u0027s your exclusive invite to The Break Room" key="i18n_firstline_group_auto_invite_headline"}}
+{{t-def "Join one of the most active online communities for retail and customer service workers." key="i18n_firstline_group_auto_invite_sub_headline"}}
+{{t-def "Accept invite" key="i18n_firstline_group_auto_invite_main_cta"}}
+{{t-def "Maybe later" key="i18n_firstline_group_auto_invite_secondary_cta"}}
+
+{{!-- TODO | REMOVE THIS when ActionBarItem is migrated to glimmer --}}
+{{!-- template-lint-disable no-passed-in-event-handlers --}}
+<div
+  {{ember-scroll-modifiers$did-intersect
+    onEnter=@onStepImpression
+    maxEnter=1
+  }}
+  class="onboarding-widget"
+  data-test-onboarding-widget={{@widgetName}}
+  ...attributes
+>
+  <Onboarding$WidgetHeader
+    class="onboarding-firstline-group-auto-invite__widget-header"
+    @headerText={{t "i18n_firstline_group_auto_invite_headline"}}
+    @subHeaderText={{t "i18n_firstline_group_auto_invite_sub_headline"}}
+    @headerClassNames="text-display-medium"
+    @subHeaderClassNames="onboarding-firstline-group-auto-invite__sub-header"
+    @data-test-firstline-group-auto-invite-heading={{true}}
+  />
+
+  <div class="display-flex flex-column align-items-center">
+    <Onboarding$ActionBarItem
+      data-test-action-bar-item="DONE"
+      @click={{this.onClickMainCTA}}
+      @itemText={{t "i18n_firstline_group_auto_invite_main_cta"}}
+      @type="DONE"
+      class="artdeco-button artdeco-button--4 full-width"
+    />
+
+    {{#unless this.shouldHideDismissBtn}}
+      <Onboarding$ActionBarItem
+        data-test-action-bar-item="SKIP"
+        @click={{@onStepSkipped}}
+        @itemText={{t "i18n_firstline_group_auto_invite_secondary_cta"}}
+        @type="SKIP"
+        class="artdeco-button artdeco-button--4 artdeco-button--tertiary artdeco-button--muted full-width mt4"
+      />
+    {{/unless}}
+  </div>
+</div>

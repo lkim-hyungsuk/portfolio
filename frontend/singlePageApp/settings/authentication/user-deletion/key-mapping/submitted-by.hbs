@@ -1,0 +1,20 @@
+{{!learning-i18n-resource}}
+{{t-def "{:author,name,full}" key="createdBy"}}
+{{t-def "Learning Admin" key="default_createdBy"}}
+
+{{#if (and @preferredFirstName @preferredLastName)}}
+  <span class="t-bold t-14">
+    {{t "createdBy" author=(hash
+      firstName=@preferredFirstName
+      lastName=@preferredLastName
+    )}}
+  </span>
+{{else}}
+  {{t "default_createdBy"}}
+{{/if}}
+<p class="t-14 t-black--light" data-test-user-deletion-key-mapping-date>
+  {{format-date
+    @createdAt
+    format="fmt_mdy_hm_short"
+    useTimeZone=true}}
+</p>

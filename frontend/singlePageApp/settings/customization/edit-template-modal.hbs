@@ -1,0 +1,220 @@
+{{!learning-i18n-resource}}
+{{t-def "Customize learner invitation email" key="customize_email_header"}}
+{{t-def "Cancel" key="cancel_button_text"}}
+{{t-def "Save" key="save_button_text"}}
+{{t-def "Template name" key="name_label"}}
+{{t-def "Add template name" key="name_placeholder"}}
+{{t-def "Subject" key="subject_label"}}
+{{t-def "Add short subject line" key="subject_placeholder"}}
+{{t-def "Header" key="header_label"}}
+{{t-def "Add clear, concise header" key="header_placeholder"}}
+{{t-def "Message" key="message_label"}}
+{{t-def "Add relevant message" key="message_placeholder"}}
+{{t-def "This field is required." key="message_feedback"}}
+{{t-def "<span>*</span> Required" key="required_fields_indicator"}}
+{{t-def "Copy of" key="copy_of"}}
+{{t-def "This template has been flagged for inappropriate content. Please revise the content and try saving again." key="ucf_failure_msg"}}
+{{t-def "Email language" key="template_language"}}
+{{t-def "This template name already exists. Please revise it and try saving again." key="template_name_already_exists"}}
+
+{{!-- Default template content --}}
+{{t-def "Unlock access to your LinkedIn Learning account" key="default_subject"}}
+{{t-def "Hi, {:companyName} has given you free access to LinkedIn Learning." key="default_header"}}
+{{t-def "Unlock learning experiences taught by real-world professionals. Bite-size or in-depth, how and when it works for you." key="default_message"}}
+
+{{!-- Tooltip messages --}}
+{{t-def "Make sure the subject is short and includes a compelling call-to-action." key="subject_tooltip_msg"}}
+{{t-def "Include your organization name and a specific reason why learners should sign up." key="header_tooltip_msg"}}
+{{t-def "Highlight courses, initiatives, or messaging that are relevant to this audience. Keep it short and specific." key="message_tooltip_msg"}}
+
+
+<ArtdecoModal
+  data-test-edit-template-modal
+  @dismissModal={{this.tryDismiss}}
+  @isOpen={{@isOpen}}
+  @size="x-large" as |Modal|
+>
+  <Modal.artdeco-modal-header>
+    {{#with (guid) as |headerId|}}
+      <h2 id={{headerId}}>
+        {{t "customize_email_header"}}
+      </h2>
+    {{/with}}
+  </Modal.artdeco-modal-header>
+  <Modal.artdeco-modal-content
+    class="edit-template-modal__modal-content"
+  >
+    <div class={{unless this.device.isSmall "flex-row"}}>
+      <form
+        class="edit-template-modal__column"
+        novalidate
+        {{on "submit" this.handleSubmit}}
+      >
+        {{#if (eq @templateError "UCF_FLAGGED")}}
+          <ArtdecoInlineFeedback
+            class="edit-template-modal__inappropriate"
+            data-test-edit-template-modal-content-inappropriate
+            @message={{t "ucf_failure_msg"}}
+            @type="error"
+          />
+        {{/if}}
+
+        <div class="edit-template-modal__input-wrapper">
+          <ArtdecoTextInput
+            data-test-edit-template-modal-name-input
+            @type="text"
+            @maxLength={{this.nameMaxLength}}
+            @label={{t "name_label"}}
+            @required={{true}}
+            @placeholder={{t "name_placeholder"}}
+            @value={{this.computedName}}
+            @onInput={{action (mut this.name) value="target.value"}}
+          />
+
+          <div class="edit-template-modal__inline-feedback-wrapper" aria-live="polite">
+            {{#if (or (eq @templateError "DUPLICATE_NAME_FLAGGED") (not (or this.isPristine this.isValidName)))}}
+              <ArtdecoInlineFeedback
+                data-test-edit-template-modal-inline-feedback
+                @message={{if (eq @templateError "DUPLICATE_NAME_FLAGGED")
+                  (t "template_name_already_exists")
+                  (t "message_feedback")}}
+                @type="error"
+              />
+            {{/if}}
+          </div>
+        </div>
+
+        {{#if this.hasMultipleLicenseLocales}}
+          <div class="edit-template-modal__input-wrapper edit-template-modal__language-dropdown-wrapper">
+            <label
+              for="edit-template-modal-language-dropdown"
+              class="edit-template-modal__language_dropdown_label"
+              data-test-edit-template-modal-locale-select
+            >
+              {{t "template_language"}}
+            </label>
+            <Shared::Ui::ComplexSelect
+              data-test-language-selection
+              id="edit-template-modal-language-dropdown"
+              @onSelect={{action (mut this.locale)}}
+              @required={{true}}
+              @form="edit-template-modal-language-dropdown" as |Select|>
+              <Shared::Ui::UserLocales
+                @withAllLanguages={{true}} as |l|>
+                {{!-- Need {{if l.locale}} for all Language option which is `null` --}}
+                <Select.option
+                  @value={{l.locale}}
+                  @selected={{if l.locale (eq this.locale (locale-to-string l.locale)) false}}
+                >
+                  {{l.displayName}}
+                </Select.option>
+              </Shared::Ui::UserLocales>
+            </Shared::Ui::ComplexSelect>
+          </div>
+        {{/if}}
+
+        <div class="edit-template-modal__input-wrapper">
+          <CPages::Settings::Customization::EditTemplateModal::InputWithTooltip
+            @maxLength={{this.subjectMaxLength}}
+            @label={{t "subject_label"}}
+            @placeholder={{t "subject_placeholder"}}
+            @value={{this.subject}}
+            @onInput={{action (mut this.subject) value="target.value"}}
+            @hoverContent={{t "subject_tooltip_msg"}}
+            @contentType="SUBJECT"
+          />
+          <div class="edit-template-modal__inline-feedback-wrapper" aria-live="polite">
+            {{#unless (or this.isPristine this.isValidSubject)}}
+              <ArtdecoInlineFeedback
+                data-test-edit-template-modal-inline-feedback
+                @message={{t "message_feedback"}}
+                @type="error"
+              />
+            {{/unless}}
+          </div>
+        </div>
+
+        <div class="edit-template-modal__input-wrapper">
+          <CPages::Settings::Customization::EditTemplateModal::InputWithTooltip
+            @maxLength={{this.headerMaxLength}}
+            @label={{t "header_label"}}
+            @placeholder={{t "header_placeholder"}}
+            @value={{this.header}}
+            @onInput={{action (mut this.header) value="target.value"}}
+            @hoverContent={{t "header_tooltip_msg"}}
+            @contentType="HEADER"
+          />
+          <div class="edit-template-modal__inline-feedback-wrapper" aria-live="polite">
+            {{#unless (or this.isPristine this.isValidHeader)}}
+              <ArtdecoInlineFeedback
+                data-test-edit-template-modal-inline-feedback
+                class="edit-template-modal__inline-feedback"
+                @message={{t "message_feedback"}}
+                @type="error"
+              />
+            {{/unless}}
+          </div>
+        </div>
+
+        <div class="edit-template-modal__input-wrapper">
+          <CPages::Settings::Customization::EditTemplateModal::InputWithTooltip
+            @isTextarea={{true}}
+            @maxLength={{this.messageMaxLength}}
+            @label={{t "message_label"}}
+            @placeholder={{t "message_placeholder"}}
+            @value={{this.message}}
+            @onInput={{action (mut this.message) value="target.value"}}
+            @hoverContent={{t "message_tooltip_msg"}}
+            @contentType="MESSAGE"
+          />
+          <div class="edit-template-modal__inline-feedback-wrapper" aria-live="polite">
+            {{#unless (or this.isPristine this.isValidMessage)}}
+              <ArtdecoInlineFeedback
+                data-test-edit-template-modal-inline-feedback
+                class="edit-template-modal__inline-feedback"
+                @message={{t "message_feedback"}}
+                @type="error"
+              />
+            {{/unless}}
+          </div>
+        </div>
+
+        {{!-- Required to enable form submission using the return key --}}
+        <input
+          aria-hidden="true"
+          class="visually-hidden"
+          type="submit"
+        >
+      </form>
+      <div class="edit-template-modal__column-divider" role="separator"></div>
+      <Common::EmailTemplatePreview
+        class="edit-template-modal__column"
+        @header={{this.header}}
+        @message={{this.message}}
+        @subject={{this.subject}}
+      />
+    </div>
+  </Modal.artdeco-modal-content>
+  <Modal.artdeco-modal-footer>
+    <p class="t-14 edit-template-modal__required-fields-indicator">
+      {{t "required_fields_indicator"}}
+    </p>
+    <ArtdecoButton
+      data-test-edit-template-modal-cancel-button
+      data-control-name="edit_template_modal__cancel_button"
+      @size={{3}}
+      @text={{t "cancel_button_text"}}
+      @type="secondary"
+      @click={{this.tryDismiss}}
+    />
+    <ArtdecoButton
+      class="edit-template-modal__save-button"
+      data-test-edit-template-modal-save-button
+      data-control-name="edit_template_modal__save_button"
+      @size={{3}}
+      @text={{t "save_button_text"}}
+      @type="primary"
+      @click={{this.handleSubmit}}
+    />
+  </Modal.artdeco-modal-footer>
+</ArtdecoModal>

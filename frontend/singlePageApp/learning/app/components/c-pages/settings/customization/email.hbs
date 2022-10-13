@@ -1,0 +1,194 @@
+{{!learning-i18n-resource}}
+{{t-def "Customize invitation emails" key="page_title"}}
+{{t-def "Customize invitation emails section" key="section_title"}}
+{{t-def "Create custom email templates and send invites to learners on the\u00A0{:linkInfo,anchor,text#People page}." key="page_subheader"}}
+{{t-def "Template Name" key="table_template_name"}}
+{{t-def "Type" key="table_type"}}
+{{t-def "Language" key="table_language"}}
+{{t-def "Created by" key="table_created_by"}}
+{{t-def "Last modified" key="table_last_modified"}}
+{{t-def "{:when,date,fmt_mdy_short}" key="last_modified_date"}}
+{{t-def "Send test email" key="table_send_test_email"}}
+{{t-def "More" key="table_more"}}
+{{t-def "Edit" key="table_edit"}}
+{{t-def "Delete" key="table_delete"}}
+{{t-def "Duplicate" key="table_duplicate"}}
+{{t-def "Create template" key="customize_email_text"}}
+{{t-def "{:numFetchedTemplates,number,integer} email {:numFetchedTemplates,choice,singular#template|plural#templates}" key="num_templates"}}
+{{t-def "You can now create personalized invitation emails that learners will receive when they get invited to LinkedIn Learning." key="get_started_message"}}
+{{t-def "<span data-test-customize-email-toast-cta class=\"customize-email__go-to-people\">People page.</span>" key="go_to_people_page"}}
+{{t-def "Get started with<span class=\"customize-email__headline-sub\">email customization</span>" key="get_started_headline"}}
+
+{{!-- Toast msgs for CREATE, UPDATE, DELETE--}}
+{{t-def "\u2018{:templateName}\u2019 created. Invite learners now on the \u00A0" key="save_success_toast_new"}}
+{{t-def "\u2018{:templateName}\u2019 has been successfully updated." key="update_success_toast"}}
+{{t-def "\u2018{:templateName}\u2019 has been successfully deleted." key="delete_success_toast"}}
+{{t-def "\u2018{:templateName}\u2019 test email has been sent to {:emailAddress}" key="send_test_email_success_toast"}}
+{{t-def "Something went wrong!" key="generic_error_message"}}
+
+{{!-- Confirmation message for component:EditTemplateModal--}}
+{{t-def "You have unsaved changes. Are you sure you want to exit?" key="close_modal_confirm"}}
+
+<section class="customize-email" aria-label={{t "section_title"}} data-test-customize-email>
+  <header
+    data-test-customize-email-header
+    class="customize-email__header"
+  >
+    {{!-- Header --}}
+    <h2 class="t-24">{{t "page_title"}}</h2>
+
+    {{!-- Sub-Header --}}
+    <h3 class="t-18 t-black--light customize-email__sub-header">
+      {{t "page_subheader"
+        linkInfo=(t-link-to "eis.people.users"
+          data-control-name="email__go_to_people_tab"
+          data-test-email-customization-go-to-people-page=true
+          aria-label=(t "go_to_people_page"))
+      }}
+    </h3>
+  </header>
+
+  {{!-- Number of templates & Main CTA --}}
+  {{#if this.fetchedTemplates.length}}
+    <div class="customize-email__main-cta">
+      <h4 class="t-16 t-bold">
+        {{t "num_templates"
+          numFetchedTemplates=this.fetchedTemplates.length
+        }}
+      </h4>
+
+      <ArtdecoButton
+        data-test-email-customization-add-template-button
+        data-control-name="email__add_template_button"
+        @text={{t "customize_email_text"}}
+        @click={{action (perform this.initiateCreate) this.selectedTemplate}}
+      />
+    </div>
+  {{/if}}
+
+  {{!-- TODO | @lkim - BE is having issues with `Send Test Email`, temporarily disabled --}}
+  {{#let
+    (hash
+      moreActionsButton=(component
+        "c-pages/settings/customization/email/more-actions-dropdown"
+        isDropdownOpen=false
+        actionButtons=(array
+          (hash
+            dataControlName="email__duplicate_template_button"
+            name=(t "table_duplicate")
+            onClick=(action (perform this.initiateCreate))
+          )
+          (hash
+            dataControlName="email__edit_template_button"
+            name=(t "table_edit")
+            onClick=(perform this.initiateEdit)
+          )
+          (hash
+            dataControlName="email__delete_template_button"
+            name=(t "table_delete")
+            onClick=(fn this.initiateDelete)
+          )
+          (hash
+            dataControlName="email__send_test_button"
+            name=(t "table_send_test_email")
+            onClick=(perform this.sendCustomizedTemplate)
+            disabled=(lix "learning.enterprise.web.email.customization.hide.sendTestEmail")
+          )
+        )
+      )
+      keyMapping=(component "c-pages/settings/customization/email/key-mapping" onClick=(perform this.initiateEdit))
+    )
+    (hash
+      propertyName="name"
+      title=(t "table_template_name")
+      disableSorting=true
+      component="keyMapping"
+    )
+    (hash
+      propertyName="emailType"
+      title=(t "table_type")
+      disableSorting=true
+      component="keyMapping"
+    )
+    (hash
+      propertyName="locale"
+      title=(t "table_language")
+      disableSorting=true
+      component="keyMapping"
+    )
+    (hash
+      propertyName="createdBy"
+      title=(t "table_created_by")
+      disableSorting=true
+      component="keyMapping"
+    )
+    (hash
+      propertyName="lastModifiedAt"
+      title=(t "table_last_modified")
+      disableSorting=true
+      component="keyMapping"
+    )
+    (hash
+      disableSorting=true
+      component="moreActionsButton"
+    )
+    as |columnComponents nameColumn typeColumn languageColumn createdByColumn lastModifiedColumn moreActionsColumn|
+  }}
+    {{#if this.fetchEmailTemplates.isRunning}}
+      <div class="customize-email__loader">
+        <ArtdecoLoader />
+      </div>
+    {{else if (is-empty this.fetchedTemplates)}}
+      <ArtdecoEmptyState
+        data-test-customize-email-empty-state
+        class="customize-email__empty-state"
+        @actionText={{t "customize_email_text"}}
+        @onButtonClick={{action (perform this.initiateCreate) this.selectedTemplate}}
+        @headline={{t "get_started_headline"}}
+        @message={{t "get_started_message"}}
+        @illustration="inmail-personalized"
+        @size={{3}}
+      />
+    {{else}}
+      <div class="customize-email__table-wrapper">
+        <ModelsTable
+          data-test-customize-email-table
+          class="customize-email__table"
+          @data={{this.fetchedTemplates}}
+          @columnComponents={{columnComponents}}
+          @columns={{array
+            nameColumn typeColumn languageColumn createdByColumn lastModifiedColumn moreActionsColumn}}
+          @themeInstance={{this.tableTheme}}
+          @showColumnsDropdown={{false}}
+          @showGlobalFilter={{false}}
+          @showPageSize={{false}}
+          @useFilteringByColumns={{false}}
+          @useNumericPagination={{false}}
+        />
+      </div>
+    {{/if}}
+  {{/let}}
+</section>
+
+{{!-- Shared across CREATE / UPDATE / DUPLICATE --}}
+{{#if this.isEditTemplateModalOpen}}
+  <CPages::Settings::Customization::EditTemplateModal
+    @isOpen={{this.isEditTemplateModalOpen}}
+    @isDuplicating={{eq this.templateEditState "duplicating"}}
+    @template={{this.selectedTemplate}}
+    @templateError={{this.templateError}}
+    @dismissText={{t "close_modal_confirm"}}
+    @onDismiss={{fn this.dismissEditState}}
+    @onSave={{perform this.save}}
+  />
+{{/if}}
+
+{{!-- Just for DELETE due to a different modal design from CREATE/UPDATE/DUPLICATE --}}
+{{#if this.isDeleteTemplateModalOpen}}
+  <CPages::Settings::Customization::DeleteTemplateModal
+    @isOpen={{this.isDeleteTemplateModalOpen}}
+    @templateName={{this.markedToDelete.name}}
+    @onDismiss={{fn this.dismissDeleteState}}
+    @onDelete={{perform this.delete}}
+  />
+{{/if}}

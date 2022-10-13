@@ -1,0 +1,132 @@
+{{!learning-i18n-resource}}
+{{!-- Desktop --}}
+{{t-def
+  "{:cardTitle,map,GENERAL#Get a more personalized and interactive learning experience|WATCH_PARTY#Start watching courses with other learners}"
+  key="card_title"
+}}
+{{t-def
+  "{:cardDesc,map,MOBILE#Connect your LinkedIn account now to get customized course recommendations|DEFAULT_TEXT#Connect your LinkedIn account now to start enjoying these great benefits:}"
+  key="card_desc"
+}}
+{{t-def
+  "{:cardBullet,map,GENERAL#Get customized course recommendations|WATCH_PARTY#Watch courses with your peers, connections, and others in the LinkedIn Learning community}"
+  key="card_bullet_a"
+}}
+{{t-def
+  "{:cardBullet,map,GENERAL#Watch courses with other learners|WATCH_PARTY#Stay up-to-date with popular content watched by people you know}"
+  key="card_bullet_b"
+}}
+{{t-def
+  "{:cardBullet,map,GENERAL#Deepen your learning with Q&A discussions and Learning Groups|WATCH_PARTY#Then share your learning achievements after completing a course!}"
+  key="card_bullet_c"
+}}
+
+{{!-- Mobile --}}
+{{t-def
+  "{:cardTitle,map,GENERAL#Get a more personalized learning experience|WATCH_PARTY#Watch courses with other learners}"
+  key="card_title_mobile"
+}}
+{{t-def
+  "{:cardDesc,map,GENERAL#Connect your LinkedIn account now to get customized course recommendations|WATCH_PARTY#Connect your LinkedIn account now to start watching courses with other learners}"
+  key="card_desc_mobile"
+}}
+
+{{!-- CTAs --}}
+{{t-def "Connect LinkedIn account" key="connect_linkedin_account"}}
+{{t-def "Not now" key="not_now"}}
+
+{{!-- Dismissed View --}}
+{{t-def "Your LinkedIn account is not connected" key="dismissed_title"}}
+{{t-def "You can always connect your LinkedIn account at another time by going to your {:settingsUrl,anchor,text#Profile Settings}" key="dismissed_desc"}}
+{{t-def "Undo" key="undo"}}
+{{t-def "Go to Settings page" key="go_to_settings_page"}}
+
+{{#if this.didDismiss}}
+  <article
+    data-test-bind-promo-card-dismissed
+    class="bind-promo-card bind-promo-card--dismissed"
+    ...attributes
+  >
+    <h3 class="bind-promo-card__secondary-title t-bold {{if this.device.isSmall "t-18" "t-24"}}">
+      {{t "dismissed_title"}}
+    </h3>
+    <p class="t-16 t-black--light">
+      {{t "dismissed_desc"
+        settingsUrl=(t-link-to "settings"
+        data-test-bind-promo-card-visit-settings-page=true
+        aria-label=(t "go_to_settings_page"))
+      }}
+    </p>
+    <ArtdecoButton
+      class="bind-promo-card__undo-button"
+      data-test-bind-promo-card-undo
+      @type="primary"
+      @controlType="click"
+      @size={{if this.device.isSmall "2" "4"}}
+      @click={{this.didDismissWidget}}
+      @text={{t "undo"}}
+    />
+  </article>
+{{else}}
+  <article
+    class="bind-promo-card {{if this.device.isSmall "bind-promo-card--mobile"}} {{if (and this.isForSearchResult (not this.device.isSmall)) "bind-promo-card--image-on-left"}}"
+    ...attributes
+  >
+    <div class="bind-promo-card__top-section {{if this.shouldWrapTitle "bind-promo-card__top-section--wrapped"}}">
+      <div class={{concat this.mercadoImage " bind-promo-card__illustration "
+        (if (or this.device.isSmall this.isForSearchResult)
+          "bind-promo-card__illustration--small bind-promo-card__illustration--unwrapped")
+        }}
+      ></div>
+      {{#if this.shouldWrapTitle}}
+        <h3 class="bind-promo-card__title t-bold t-18">
+          {{t "card_title_mobile" cardTitle=(if this.isForWatchParty "WATCH_PARTY" "GENERAL")}}
+        </h3>
+      {{/if}}
+    </div>
+
+    <div class="bind-promo-card__content">
+      {{#unless this.shouldWrapTitle}}
+        <h3 class="bind-promo-card__title t-bold t-24">
+          {{t "card_title" cardTitle=(if this.isForWatchParty "WATCH_PARTY" "GENERAL")}}
+        </h3>
+      {{/unless}}
+
+      <p class="bind-promo-card__desc t-16 t-bold {{if this.device.isSmall "t-normal t-black--light"}}">
+        {{t (if this.device.isSmall "card_desc_mobile" "card_desc")
+          cardDesc=(if this.isForWatchParty "WATCH_PARTY" "GENERAL")}}
+      </p>
+
+      {{#unless this.device.isSmall}}
+        <ul>
+          {{#each this.cardBulletPoints as |bullet|}}
+            <li class="bind-promo-card__bullet-point">
+              {{t bullet cardBullet=(if this.isForWatchParty "WATCH_PARTY" "GENERAL")}}
+            </li>
+          {{/each}}
+        </ul>
+      {{/unless}}
+
+      <div class="bind-promo-card__ctas">
+        <ArtdecoButton
+          class="bind-promo-card__main-cta"
+          data-test-bind-promo-card-main-cta
+          @type="primary"
+          @controlType="click"
+          @size={{if this.device.isSmall "2" "4"}}
+          @click={{this.launchBindingFlow}}
+          @text={{t "connect_linkedin_account"}}
+        />
+        <ArtdecoButton
+          class="bind-promo-card__secondary-cta"
+          data-test-bind-promo-card-secondary-cta
+          @type="tertiary"
+          @controlType="click"
+          @size={{if this.device.isSmall "2" "4"}}
+          @click={{this.didDismissWidget}}
+          @text={{t "not_now"}}
+        />
+      </div>
+    </div>
+  </article>
+{{/if}}

@@ -1,0 +1,31 @@
+{{!learning-i18n-resource}}
+{{t-def "{:status,select,FAILED#Failed|DONE#Succeed|PROCESSING#Processing|INITIALIZING#Processing}" key="status"}}
+{{t-def "Failed ({:count,number,integer} {:count,plural,one#error|other#errors})" key="failed_status"}}
+{{t-def "When the uploaded CSV file is processed succesfully, you will be able to download the result file. Check out the last table column." key="download_csv_instruction"}}
+
+<span class={{if @isError "t-bold color-red-5"}}>
+  {{#if @isUserGeneratedError}}
+    {{t "failed_status" count=@record.resultStats.failed}}
+  {{else}}
+    {{t "status" status=@record.status}}
+    {{#if @isSystemProcessing}}
+      <ArtdecoHoverableTrigger as |trigger|>
+        <span
+          aria-describedby={{trigger.ariaId}}
+          data-test-key-mapping-status-icon
+        >
+          {{li-icon
+            type="notify-pebble-icon"
+            size="small"
+            class="key-mapping__icon"
+          }}
+        </span>
+        <trigger.artdeco-hoverable-content
+          data-test-key-mapping-status-hover-content
+        >
+          {{t "download_csv_instruction"}}
+        </trigger.artdeco-hoverable-content>
+      </ArtdecoHoverableTrigger>
+    {{/if}}
+  {{/if}}
+</span>

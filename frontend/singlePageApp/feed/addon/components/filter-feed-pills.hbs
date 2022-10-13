@@ -1,0 +1,89 @@
+{{!voyager-i18n-resource}}
+{{t-def "Instruction for The Break Room pill" key="a11y_coach_mark_title"}}
+{{t-def
+  "Now it’s even easier to find stories from other retail workers."
+  key="i18n_coach_mark_subject"
+}}
+{{t-def
+  "Posts from The Break Room group, which you’re a member of, will now show up here. Don’t worry, any comments and reactions here are still private to the group."
+  key="i18n_coach_mark_content"
+}}
+
+<div ...attributes class="feed-filter-feed-pills">
+  <ArtdecoPill$ArtdecoPillChoiceGroup
+    @onSelect={{this.onTogglePill}}
+    @selection={{@selectedFilterUrn}}
+    class="display-flex"
+    as |group|
+  >
+    {{#each this.filterFeedOptions as |filterFeedOption|}}
+      {{#if
+        (global-helpers$eq
+          filterFeedOption.filterFeedTypeUrn
+          "urn:li:fs_filterFeedType:THE_BREAK_ROOM"
+        )
+      }}
+        <ProductEducation$Coachmark
+          data-test-filter-feed-pills-coachmark
+          @isVisible={{this.shouldShowCoachmark}}
+          {{on "click" (ember-set-helper$set this "isPEMOpen" true)}}
+        >
+          <group.choice-pill
+            @a11yText={{filterFeedOption.text.text}}
+            @text={{filterFeedOption.text.text}}
+            @value={{filterFeedOption.filterFeedTypeUrn}}
+            @size={{3}}
+            class="block mr2"
+            data-test-feed__filter-feed-pill={{filterFeedOption.filterFeedTypeUrn}}
+            {{on
+              "click"
+              (fn this.fireInteractionEvent filterFeedOption.filterFeedTypeUrn)
+            }}
+          />
+        </ProductEducation$Coachmark>
+      {{else}}
+        <group.choice-pill
+          @a11yText={{filterFeedOption.text.text}}
+          @text={{filterFeedOption.text.text}}
+          @value={{filterFeedOption.filterFeedTypeUrn}}
+          @size={{3}}
+          class="block mr2"
+          data-test-feed__filter-feed-pill={{filterFeedOption.filterFeedTypeUrn}}
+          {{on
+            "click"
+            (fn this.fireInteractionEvent filterFeedOption.filterFeedTypeUrn)
+          }}
+        />
+      {{/if}}
+    {{/each}}
+  </ArtdecoPill$ArtdecoPillChoiceGroup>
+</div>
+<ProductEducation$OnboardingModal
+  @isOpen={{this.isPEMOpen}}
+  @displayDoneButton={{true}}
+  @onDismiss={{this.dismissCoachmarkModal}}
+  @a11yTitle={{t "a11y_coach_mark_title"}}
+  @onboardingData={{this.modalItems}}
+  @position="center-rail"
+  @contentClasses="feed-filter-feed-pills__coachmark-modal-content"
+  as |modal|
+>
+  <modal.onboarding-modal-highlight>
+    <div class="display-flex">
+      {{#each this.filterFeedOptions as |pill|}}
+        <ArtdecoPill$ArtdecoPillChoice
+          @a11yText={{pill.text.text}}
+          @value={{pill.filterFeedTypeUrn}}
+          @size={{3}}
+          @selection={{@selectedFilterUrn}}
+          @onChoice={{global-helpers$noop}}
+          aria-disabled="true"
+          class="feed-filter-feed-pills__coachmark-pill"
+          tabindex="-1"
+        >
+          <TextViewModel$TextViewModelV2 @tvm={{pill.text}} />
+        </ArtdecoPill$ArtdecoPillChoice>
+      {{/each}}
+    </div>
+  </modal.onboarding-modal-highlight>
+</ProductEducation$OnboardingModal>

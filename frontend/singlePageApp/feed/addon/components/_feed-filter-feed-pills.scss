@@ -1,0 +1,18 @@
+.feed-filter-feed-pills {
+  margin: {
+    top: item-spacing(4);
+    bottom: item-spacing(2);
+  }
+  // Half the bottom spacing is padding so the scroll bar has some separation if shown.
+  padding-bottom: item-spacing(2);
+  overflow: visible;
+  white-space: nowrap;
+}
+
+.feed-filter-feed-pills__coachmark-modal-content {
+  max-width: 350px;
+}
+
+.feed-filter-feed-pills__coachmark-pill:not(:first-of-type) {
+  margin-left: ui-spacing(0.5);
+}

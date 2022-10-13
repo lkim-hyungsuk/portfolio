@@ -1,0 +1,152 @@
+{
+  "activationEmailV3": "enabled",
+  "organizationName": "Learning EI SSO Optional",
+  "emailType": "ACTIVATION",
+  "optimizationExperimentResult": "template-free-access",
+  "activationUrl": "https://www.linkedin-ei.com/learning-login/continue?account=7318716&identity=ABkBAAAAAABvrLwAAAAAAWK7_wAAAXhNDUEOAfCpEMCVZ88RM1sBh9He5kBMAfB7&channelType=ADMIN_EMAIL_INVITATION_VIA_RESEND&itrk=v5oI8QI3QaaxG6KwM2U0Ng%3D%3D",
+  "organizationLogo": "https://image.shutterstock.com/image-vector/fun-people-healthy-life-logo-260nw-560428081.jpg",
+  "recommendations": [
+  {
+  "durationFormatOption": "hour",
+  "durationMinuteValue": 6,
+  "durationInSecond": 7574,
+  "durationSecondValue": 14,
+  "lyndaCourse": {
+  "descriptionWasTruncated": true,
+  "redirectUrl": "https://www.linkedin-ei.com/learning/excel-essential-training-office-365?u=7318716",
+  "description": "Get up to speed with Microsoft Excel, the world's most popular spreadsheet program. Follow along with Excel expert Dennis Taylor as he demonstrates how...",
+  "viewerCount": 368797,
+  "id": 728369,
+  "title": "Excel Essential Training (Office 365)",
+  "locale": {
+  "country": "US",
+  "language": "en"
+  },
+  "activationUrl": "https://www.linkedin-ei.com/learning-login/continue?account=7318716&identity=ABkBAAAAAABvrLwAAAAAAWK7_wAAAXhNDUl8AVPaahx48tp-nb7O60NjFC8LOWL2&channelType=ADMIN_EMAIL_INVITATION_VIA_RESEND&itrk=v5oI8QI3QaaxG6KwM2U0Ng%3D%3D&redirect=https%3A%2F%2Fwww.linkedin-ei.com%2Flearning%2Fexcel-essential-training-office-365%3Fu%3D7318716",
+  "socialProof": "Trending globally",
+  "slug": "excel-essential-training-office-365",
+  "thumbnailUrl": "https://cdn.lynda.com/course/728369/728369-636733994850800004-16x9.jpg"
+  }
+  },
+  {
+  "durationFormatOption": "hour",
+  "durationMinuteValue": 6,
+  "durationInSecond": 7574,
+  "durationSecondValue": 14,
+  "lyndaCourse": {
+  "descriptionWasTruncated": true,
+  "redirectUrl": "https://www.linkedin-ei.com/learning/excel-essential-training-office-365?u=7318716",
+  "description": "Get up to speed with Microsoft Excel, the world's most popular spreadsheet program. Follow along with Excel expert Dennis Taylor as he demonstrates how...",
+  "viewerCount": 368797,
+  "id": 728369,
+  "title": "Excel Essential Training (Office 365)",
+  "locale": {
+  "country": "US",
+  "language": "en"
+  },
+  "activationUrl": "https://www.linkedin-ei.com/learning-login/continue?account=7318716&identity=ABkBAAAAAABvrLwAAAAAAWK7_wAAAXhNDUl8AVPaahx48tp-nb7O60NjFC8LOWL2&channelType=ADMIN_EMAIL_INVITATION_VIA_RESEND&itrk=v5oI8QI3QaaxG6KwM2U0Ng%3D%3D&redirect=https%3A%2F%2Fwww.linkedin-ei.com%2Flearning%2Fexcel-essential-training-office-365%3Fu%3D7318716",
+  "socialProof": "Trending globally",
+  "slug": "excel-essential-training-office-365",
+  "thumbnailUrl": "https://cdn.lynda.com/course/728369/728369-636733994850800004-16x9.jpg"
+  },
+  "durationHourValue": 2,
+  "durationDayValue": 0,
+  "content": {
+  "descriptionWasTruncated": true,
+  "redirectUrl": "https://www.linkedin-ei.com/learning/excel-essential-training-office-365?u=7318716",
+  "description": "Get up to speed with Microsoft Excel, the world's most popular spreadsheet program. Follow along with Excel expert Dennis Taylor as he demonstrates how...",
+  "viewerCount": 368797,
+  "id": 728369,
+  "title": "Excel Essential Training (Office 365)",
+  "locale": {
+  "country": "US",
+  "language": "en"
+  },
+  "contentType": "lyndaCourse",
+  "slug": "excel-essential-training-office-365",
+  "thumbnailUrl": "https://cdn.lynda.com/course/728369/728369-636733994850800004-16x9.jpg"
+  }
+  },
+  {
+  "durationFormatOption": "hour",
+  "durationMinuteValue": 35,
+  "durationInSecond": 5733,
+  "durationSecondValue": 33,
+  "lyndaCourse": {
+  "descriptionWasTruncated": true,
+  "redirectUrl": "https://www.linkedin-ei.com/learning/agile-foundations?u=7318716",
+  "description": "Teams that embrace an agile mindset are often better able to respond to customer feedback and shifting business needs—and have a bit more fun in the process....",
+  "viewerCount": 153880,
+  "id": 761929,
+  "title": "Agile Foundations",
+  "locale": {
+  "country": "US",
+  "language": "en"
+  },
+  "activationUrl": "https://www.linkedin-ei.com/learning-login/continue?account=7318716&identity=ABkBAAAAAABvrLwAAAAAAWK7_wAAAXhNDUwRAWkzduuWMK85Z9wGNI3SAOxdGZpA&channelType=ADMIN_EMAIL_INVITATION_VIA_RESEND&itrk=v5oI8QI3QaaxG6KwM2U0Ng%3D%3D&redirect=https%3A%2F%2Fwww.linkedin-ei.com%2Flearning%2Fagile-foundations%3Fu%3D7318716",
+  "socialProof": "Trending globally",
+  "slug": "agile-foundations",
+  "thumbnailUrl": "https://cdn.lynda.com/course/761929/761929-636791746721558069-16x9.jpg"
+  },
+  "durationHourValue": 1,
+  "durationDayValue": 0,
+  "content": {
+  "descriptionWasTruncated": true,
+  "redirectUrl": "https://www.linkedin-ei.com/learning/agile-foundations?u=7318716",
+  "description": "Teams that embrace an agile mindset are often better able to respond to customer feedback and shifting business needs—and have a bit more fun in the process....",
+  "viewerCount": 153880,
+  "id": 761929,
+  "title": "Agile Foundations",
+  "locale": {
+  "country": "US",
+  "language": "en"
+  },
+  "contentType": "lyndaCourse",
+  "slug": "agile-foundations",
+  "thumbnailUrl": "https://cdn.lynda.com/course/761929/761929-636791746721558069-16x9.jpg"
+  }
+  },
+  {
+  "durationFormatOption": "minute",
+  "durationMinuteValue": 41,
+  "durationInSecond": 2489,
+  "durationSecondValue": 29,
+  "lyndaCourse": {
+  "descriptionWasTruncated": true,
+  "redirectUrl": "https://www.linkedin-ei.com/learning/building-resilience?u=7318716",
+  "description": "Have trouble getting by when the going gets tough? Everyone wants to perform well when the pressure's on, but a lot of us withdraw in times of stress or...",
+  "viewerCount": 198579,
+  "id": 170777,
+  "title": "Building Resilience",
+  "locale": {
+  "country": "US",
+  "language": "en"
+  },
+  "activationUrl": "https://www.linkedin-ei.com/learning-login/continue?account=7318716&identity=ABkBAAAAAABvrLwAAAAAAWK7_wAAAXhNDU1hAeYYXbNDiD1LxrMhf9A_vBN7qlDA&channelType=ADMIN_EMAIL_INVITATION_VIA_RESEND&itrk=v5oI8QI3QaaxG6KwM2U0Ng%3D%3D&redirect=https%3A%2F%2Fwww.linkedin-ei.com%2Flearning%2Fbuilding-resilience%3Fu%3D7318716",
+  "socialProof": "Trending globally",
+  "slug": "building-resilience",
+  "thumbnailUrl": "https://cdn.lynda.com/course/170777/170777-636270903063738743-16x9.jpg"
+  },
+  "durationHourValue": 0,
+  "durationDayValue": 0,
+  "content": {
+  "descriptionWasTruncated": true,
+  "redirectUrl": "https://www.linkedin-ei.com/learning/building-resilience?u=7318716",
+  "description": "Have trouble getting by when the going gets tough? Everyone wants to perform well when the pressure's on, but a lot of us withdraw in times of stress or...",
+  "viewerCount": 198579,
+  "id": 170777,
+  "title": "Building Resilience",
+  "locale": {
+  "country": "US",
+  "language": "en"
+  },
+  "contentType": "lyndaCourse",
+  "slug": "building-resilience",
+  "thumbnailUrl": "https://cdn.lynda.com/course/170777/170777-636270903063738743-16x9.jpg"
+  }
+  }
+  ],
+  "invitationTrackingId": "v5oI8QI3QaaxG6KwM2U0Ng==",
+  "expirationDate": "1616200417628"
+  }
+  

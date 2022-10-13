@@ -1,0 +1,47 @@
+{{!learning-i18n-resource}}
+{{t-def "Delete email template" key="header"}}
+{{t-def
+  "Are you sure you want to delete \u2018{:templateName}\u2019? This will be permanently deleted."
+  key="are_you_sure"
+}}
+{{t-def "Cancel" key="cancel"}}
+{{t-def "Yes, delete" key="delete"}}
+
+<ArtdecoModal
+  class="delete-template-modal"
+  data-test-delete-template-modal
+  @dismissModal={{@onDismiss}}
+  @isOpen={{@isOpen}}
+  @size="medium"
+  as |Modal|
+>
+  <Modal.artdeco-modal-header>
+    {{#let (guid) as |headerId|}}
+      <h3 id={{headerId}}>
+        {{t "header"}}
+      </h3>
+    {{/let}}
+  </Modal.artdeco-modal-header>
+  <Modal.artdeco-modal-content class="delete-template-modal__content">
+    <div class="delete-template-modal__illustration-circle-warning"></div>
+    {{t "are_you_sure" templateName=@templateName}}
+  </Modal.artdeco-modal-content>
+  <Modal.artdeco-modal-footer>
+    <ArtdecoButton
+      data-test-delete-template-modal-cancel-button
+      data-control-name="delete_template_modal__cancel_button"
+      @size={{3}}
+      @text={{t "cancel"}}
+      @type="secondary"
+      @click={{@onDismiss}}
+    />
+    <ArtdecoButton
+      data-test-delete-template-modal-delete-button
+      data-control-name="delete_template_modal__delete_button"
+      @size={{3}}
+      @text={{t "delete"}}
+      @type="primary"
+      @click={{@onDelete}}
+    />
+  </Modal.artdeco-modal-footer>
+</ArtdecoModal>

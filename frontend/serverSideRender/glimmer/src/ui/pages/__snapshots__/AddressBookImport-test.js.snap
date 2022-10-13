@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ABook Import page renders the page correctly 1`] = `
+"<html lang=\\"en\\">
+
+    <head>
+        <meta name=\\"pageKey\\"
+            content=\\"testRunPageKey\\">
+        <meta name=\\"locale\\"
+            content=\\"en_US\\">
+        <meta id=\\"config\\"
+            data-call-tree-id=\\"testTreeId\\"
+            data-service-name=\\"@linkedin/start\\"
+            data-browser-id=\\"testBrowserId\\"
+            data-disable-jsbeacon-pagekey-suffix=\\"false\\">
+        <link rel=\\"canonical\\"
+            href=\\"https://www.linkedin.com/onboarding/start/abook-import/new\\">
+        <link rel=\\"icon\\"
+            href=\\"/%2F%40linkedin%2Fstart%2Fssr-ui-lib%2Fstatic%2Fimages%2Ffavicon.ico\\">
+        <script>
+            function getDfd() {
+                let yFn, nFn;
+                const p = new Promise(function(y, n) {
+                    yFn = y;
+                    nFn = n;
+                });
+                p.resolve = yFn;
+                p.reject = nFn;
+                return p;
+            }
+            window.lazyloader = getDfd();
+            window.tracking = getDfd();
+            window.impressionTracking = getDfd();
+            window.ingraphTracking = getDfd();
+            window.appDetection = getDfd();
+            window.pemTracking = getDfd();
+        </script>
+        <title>LinkedIn Onboarding - ABook Import</title>
+        <meta name=\\"robots\\"
+            content=\\"noarchive noindex\\">
+        <meta name=\\"description\\"
+            content=\\"LinkedIn Onboarding - ABook Import\\">
+        <meta property=\\"og:title\\"
+            content=\\"LinkedIn Onboarding - ABook Import\\">
+        <meta property=\\"og:description\\"
+            content=\\"LinkedIn Onboarding - ABook Import\\">
+        <meta property=\\"og:image\\"
+            content=\\"/%2F%40linkedin%2Fstart%2Fssr-ui-lib%2Fstatic%2Fimages%2Ficon-linkedin-logo-blue7-34dp.svg\\">
+        <meta property=\\"og:type\\"
+            content=\\"website\\">
+        <meta property=\\"og:url\\"
+            content=\\"https://www.linkedin.com/onboarding/start/abook-import/new\\">
+        <meta name=\\"twitter:card\\"
+            content=\\"summary\\">
+        <meta name=\\"twitter:site\\"
+            content=\\"@linkedin\\">
+        <meta name=\\"twitter:title\\"
+            content=\\"LinkedIn Onboarding - ABook Import\\">
+        <meta name=\\"twitter:description\\"
+            content=\\"LinkedIn Onboarding - ABook Import\\">
+        <meta name=\\"twitter:image\\"
+            content=\\"/%2F%40linkedin%2Fstart%2Fssr-ui-lib%2Fstatic%2Fimages%2Ficon-linkedin-logo-blue7-34dp.svg\\">
+        <link rel=\\"stylesheet\\"
+            href=\\"/%2F%40linkedin%2Fstart%2Fstylesheets%2Faddress-book-import_en_US.css\\">
+        <script src=\\"/%2F%40linkedin%2Fstart%2Fartdeco%2Fstatic%2Fjavascripts%2Fartdeco-sans-icons.js\\"
+            defer></script>
+    </head>
+
+    <body dir=\\"ltr\\">
+        <main class=\\"px-3 flex flex-col bg-color-canvas-tint min-h-screen items-center\\"
+            role=\\"main\\">
+            <nav class=\\"pt-4 self-start\\">
+                <span class=\\"sr-only\\">LinkedIn</span>
+                <icon class=\\"block text-color-brand w-[84px] h-[21px] papabear:w-[135px] papabear:h-[34px]
+        \\"
+                    data-test-id=\\"nav-logo\\"
+                    data-delayed-url=\\"/%2F%40linkedin%2Fstart%2Fssr-ui-lib%2Fstatic%2Fimages%2Fsvg-for-lazyloading%2Flinkedin-logo-blue7.svg\\"></icon>
+            </nav>
+            <header class=\\"onboarding-header w-full mb-3 flex flex-col text-left pt-4\\">
+                <h1 class=\\"text-xl font-bold text-color-text leading-[30px] \\">Add your contacts to see who you already know on LinkedIn</h1>
+            </header>
+            <section class=\\"flex-auto flex flex-col items-center pt-2\\">
+                <icon class=\\"flex items-center justify-center w-[128px] h-[128px] img\\"
+                    data-delayed-url=\\"/%2F%40linkedin%2Fstart%2Fimages%2Fmercado%2Fillustration-microspots%2Fmain-commute%2Flarge.svg\\"></icon>
+                <h2 class=\\"text-md text-center text-color-text-secondary pt-2\\">We’ll periodically import and store your contacts to suggest connections and show you updates about your contacts. You can turn off sync and manage your contacts. You choose who to connect to and who to invite.</h2>
+                <p class=\\"text-md text-color-action font-bold\\">Learn more</p>
+            </section>
+            <footer class=\\"footer-sticky\\">
+                <a class=\\"button-large button-primary button-link w-full\\"
+                    target=\\"_blank\\"
+                    href=\\"https://www.linkedinmobileapp.com/?appType=FLAGSHIP&amp;trk=start_fe_address_book_import_address_book_import\\"
+                    data-tracking-control-name=\\"abook-import-continue\\"
+                    data-tracking-will-navigate=\\"false\\"
+                    data-js-module-id=\\"submit\\">
+                    <span class=\\"align-middle text-white\\">Sync my contacts</span>
+                </a>
+                <button class=\\"button-large button-tertiary-muted w-full mt-1.5\\"
+                    data-tracking-control-name=\\"abook-import-skip\\"
+                    data-js-module-id=\\"skip\\"
+                    type=\\"button\\">Skip for now</button>
+            </footer>
+        </main>
+        <code id=\\"currentStepType\\"
+            style=\\"display: none\\">
+            <!--\\"ABOOK_IMPORT\\"-->
+        </code>
+        <code id=\\"source\\"
+            style=\\"display: none\\">
+            <!--\\"lite-frontend\\"-->
+        </code>
+        <script src=\\"/%2F%40linkedin%2Fstart%2Fssr-ui-lib%2Fssr-ui-lib-base-page.dev.js\\"
+            async></script>
+        <script src=\\"/%2F%40linkedin%2Fstart%2Fdist%2FAddressBookImport.js\\"
+            async
+            defer></script>
+    </body>
+
+</html>"
+`;

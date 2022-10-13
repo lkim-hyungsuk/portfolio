@@ -1,0 +1,44 @@
+{{!learning-i18n-resource}}
+{{t-def "More actions" key="title"}}
+
+<ArtdecoDropdown
+  @isOpen={{this.isDropdownOpen}}
+  @onVisibilityChange={{set this "isDropdownOpen"}}
+  @useNewFocusModel={{true}}
+  as |dropdown|
+>
+  <dropdown.dropdown-trigger
+    class="key-mapping__more-actions-dropdown"
+    data-test-more-actions-dropdown
+    aria-label={{t "title"}}
+  >
+    <ArtdecoHoverableTrigger as |trigger|>
+      <ArtdecoButton
+        @type="tertiary"
+        @color="muted"
+        @icon="ellipsis-horizontal-icon"
+        @size="2"
+        @circle={{true}}
+        @aria-describedby={{trigger.ariaId}}
+      />
+      <trigger.artdeco-hoverable-content>
+        {{t "title"}}
+      </trigger.artdeco-hoverable-content>
+    </ArtdecoHoverableTrigger>
+  </dropdown.dropdown-trigger>
+  <dropdown.dropdown-content>
+    {{#each @actionButtons as |actionButton|}}
+      {{#with actionButton.onClick as |callback|}}
+        {{#unless actionButton.disabled}}
+          <ArtdecoDropdownItem
+            data-test-more-actions-item={{actionButton.name}}
+            data-control-name={{actionButton.dataControlName}}
+            @itemSelected={{fn callback @record dropdown.close}}
+          >
+            {{actionButton.name}}
+          </ArtdecoDropdownItem>
+        {{/unless}}
+      {{/with}}
+    {{/each}}
+  </dropdown.dropdown-content>
+</ArtdecoDropdown>

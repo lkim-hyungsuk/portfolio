@@ -1,0 +1,44 @@
+{{!learning-i18n-resource}}
+{{t-def "Download CSV" key="a11y_text"}}
+
+{{! Deprecated }}
+{{t-def "{:when,date,fmt_mdy_hm_short}" key="date" deprecated="2/22/2021"}}
+{{t-def "{:author,name,full}" key="createdBy" deprecated="2/22/2021"}}
+{{t-def "Learning Admin" key="default_createdBy" deprecated="2/22/2021"}}
+{{t-def "{:status,map,FAILED#Failed|DONE#Succeed|PROCESSING#Processing|INITIALIZING#Processing}" key="status" deprecated="2/22/2021"}}
+{{t-def "Failed ({:count,number,integer} {:count,choice,singular#error|plural#errors})" key="failed_status" deprecated="2/22/2021"}}
+
+{{#with @column.propertyName as |propertyName|}}
+  {{#if (eq propertyName "jobId")}}
+    <span class="t-bold">{{@record.key.id}}</span>
+  {{else if (eq propertyName "submittedBy")}}
+    <CPages::Settings::Authentication::UserDeletion::KeyMapping::SubmittedBy
+      @firstName={{@record.creatorInfo.preferredFirstName}}
+      @lastName={{@record.creatorInfo.preferredLastName}}
+      @createdAt={{@record.createdAt}}
+    />
+  {{else if (eq propertyName "totalRecords")}}
+    {{@record.resultStats.total}}
+  {{else if (eq propertyName "status")}}
+    <CPages::Settings::Authentication::UserDeletion::KeyMapping::Status
+      @record={{@record}}
+      @isError={{this.isError}}
+      @isUserGeneratedError={{this.isUserGeneratedError}}
+      @isSystemProcessing={{this.isSystemProcessing}}
+    />
+  {{else if (eq propertyName "deletedUsers")}}
+    {{@record.resultStats.succeeded}}
+  {{else if (and (eq propertyName "resultCsvUrl") @record.encryptedResultMediaId)}}
+    <ArtdecoButton
+      @icon="download-icon"
+      @type="tertiary"
+      @circle={{true}}
+      @size={{2}}
+      @disabled={{this.isSystemProcessing}}
+      aria-label={{t "a11y_text"}}
+      data-control-name="user-deletion__download-csv"
+      data-test-user-deletion-download
+      {{on "click" (fn @onDownloadCsv @record.encryptedResultMediaId)}}
+    />
+  {{/if}}
+{{/with}}

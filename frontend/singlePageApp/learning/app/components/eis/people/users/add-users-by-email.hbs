@@ -1,0 +1,196 @@
+{{!learning-i18n-resource}}
+{{t-def "Add users by email" key="add_users_by_email"}}
+{{t-def "Cancel" key="cancel_btn"}}
+{{t-def "Please wait. This will take less than a minute." key="please_wait"}}
+{{t-def "Licenses" key="licenses"}}
+{{t-def "Invitation Email" key="invitation_email"}}
+
+{{!-- New --}}
+{{t-def "Basic Info" key="basic_info"}}
+{{t-def "Advanced Settings" key="advanced_settings"}}
+{{t-def "License" key="license_types"}}
+{{t-def "License & authentication types" key="license_types_with_auth"}}
+{{t-def "License assignment" key="license_assignment"}}
+{{t-def "You must select a group before proceeding" key="groups_typeahead_subtitle"}}
+{{t-def "Curators are able to" key="curators_basic_title"}}
+{{t-def "Create and share custom learning paths." key="create_custom_content"}}
+{{t-def "Get insights on how content is performing." key="get_insights_on"}}
+{{t-def "Access, edit and delete <strong>self-created content</strong>." key="access_edit_delete"}}
+{{t-def "Confirm" key="confirm"}}
+
+{{!-- Used in JS --}}
+{{t-def "To add more than {:limit,number,integer} curators, cancel and choose “Add curators by CSV.”" key="use_case_curator_info"}}
+{{t-def "To add more than {:limit,number,integer} users, cancel and choose “Add users by CSV.”" key="use_case_info"}}
+{{t-def "To add more than {:limit,number,integer} licenses, cancel and choose “Add users by CSV.”" key="to_add_more_licenses"}}
+
+{{!-- Deprecated --}}
+{{t-def "Save" key="save_btn"}}
+
+<ArtdecoModal
+  @size="x-large"
+  @modalClasses="add-users-by-email"
+  @isOpen={{@isAddByEmailModalOpen}}
+  @headerId={{concat this.elementId "modal"}}
+  @dismissModal={{fn (tracked-action "add_users_by_email__dismiss" (fn this.tryDismissModal))}}
+  as |artdecoModal|
+>
+  <artdecoModal.artdeco-modal-header>
+    <h2 id={{concat this.elementId "modal"}} data-test-add-users-by-email-modal-title>
+      {{or @header this.header}}
+    </h2>
+  </artdecoModal.artdeco-modal-header>
+  <artdecoModal.artdeco-modal-content class="add-users-by-email__container">
+    {{#if this.isLoading}}
+      <div class="add-users-by-email__loader">
+        <ArtdecoLoader />
+        <p class="add-users-by-email__wait">
+          {{t "please_wait"}}
+        </p>
+      </div>
+    {{else}}
+      <div class="add-users-by-email__content">
+        <div class="add-users-by-email__column add-users-by-email__column--bordered add-users-by-email__users-input">
+          <Eis::People::Users::AddUsersInput
+            @license={{this.license}}
+            @limit={{this.limit}}
+            @onUpdate={{fn this.setUsers}}
+            @onAttemptToExceedLimit={{fn (mut this.shouldHighlightLimit)}}
+            @onAttemptToAddInvalidUser={{fn (mut this.hasInvalidUsers)}}
+            @addUsersFromCuratorsTab={{@addUsersFromCuratorsTab}}
+          />
+        </div>
+        <div class="add-users-by-email__artdeco-tab add-users-by-email__column add-users-by-email__column--bordered add-users-by-email__basic-info">
+          <ArtdecoTabs
+            role="presentation"
+            data-test-add-users-by-email-new
+            @in-modal={{true}}
+            @selection={{this.selection}}
+            as |Tabs|
+          >
+            <Tabs.tablist as |Tablist|>
+              <Tablist.tab
+                data-control-name="add-users-by-email__licenses_tab"
+                data-test-add-users-by-email-tab={{if @addUsersFromCuratorsTab "basic-info" "licenses"}}
+                data-live-test="add-users-by-email-tab-info"
+                @model={{if @addUsersFromCuratorsTab "basicInfo" "licenses"}}
+                @on-select={{fn (mut this.selection)}}
+              >
+                {{#if @addUsersFromCuratorsTab}}
+                  {{t "basic_info"}}
+                {{else}}
+                  {{t "licenses"}}
+                {{/if}}
+              </Tablist.tab>
+              <Tablist.tab
+                data-control-name="add-users-by-email__email_customization_tab"
+                data-test-add-users-by-email-tab={{if @addUsersFromCuratorsTab "advanced-settings" "email-customization"}}
+                data-live-test="add-users-by-email-tab-settings"
+                @model={{if @addUsersFromCuratorsTab "advancedSettings" "emailCustomization"}}
+                @on-select={{fn (mut this.selection)}}
+              >
+                {{#if @addUsersFromCuratorsTab}}
+                  {{t "advanced_settings"}}
+                {{else}}
+                  {{t "invitation_email"}}
+                {{/if}}
+              </Tablist.tab>
+            </Tabs.tablist>
+            <Tabs.tabpanel
+              @model={{if @addUsersFromCuratorsTab "basicInfo" "licenses"}}
+              @class="add-users-by-email__tab-panel add-users-by-email__tab-panel--advanced"
+            >
+              {{#if @addUsersFromCuratorsTab}}
+                <h3 class="t-bold t-16 add-users-by-email__basic-info-label">
+                  {{t "curators_basic_title"}}
+                </h3>
+                <ul class="add-users-by-email__basic-info-list">
+                  <li class="t-14 add-users-by-email__basic-info-list-item">
+                    {{t "create_custom_content"}}
+                  </li>
+                  <li class="t-14 add-users-by-email__basic-info-list-item">
+                    {{t "get_insights_on"}}
+                  </li>
+                  <li class="t-14 add-users-by-email__basic-info-list-item">
+                    {{t "access_edit_delete"}}
+                  </li>
+                </ul>
+              {{/if}}
+              {{#if @addUsersFromCuratorsTab}}
+                <h3
+                  class="add-users-by-email__basic-info-label--extra-margin t-bold t-16"
+                >
+                  {{#if @hasMultipleSsoOptions}}
+                    {{t "license_types_with_auth"}}
+                  {{else}}
+                    {{t "license_types"}}
+                  {{/if}}
+                </h3>
+              {{/if}}
+              <Eis::License::LicenseAssignment
+                @selectedLicenseType={{@selectedLicenseType}}
+                @defaultToOnlyLicense={{true}}
+                @onUpdate={{fn (mut this.license)}}
+                @label={{t "license_assignment"}}
+              />
+              <Eis::license::ConnectedSsoType
+                @setAuthType={{fn this.setAuthType}}
+              />
+              {{#if @isGroupScopedSubadmin}}
+                <Shared::Typeahead::GroupsTypeahead
+                  @onHandleSelectedGroup={{fn this.onHandleSelectedGroup}}
+                  @onRemoveGroup={{fn this.onRemoveGroup}}
+                  @label={{t "groups_typeahead_subtitle"}}
+                />
+              {{/if}}
+            </Tabs.tabpanel>
+            <Tabs.tabpanel
+              @model={{if @addUsersFromCuratorsTab "advancedSettings" "emailCustomization"}}
+              @class="add-users-by-email__tab-panel"
+            >
+              <Shared::EmailTemplateSearchTypeahead
+                @onHandleSelectedTemplate={{fn (mut this.selectedCustomTemplateUrn)}}
+                @targetTemplateType={{this.activateEmailType}}
+                @isCustomTemplateSelected={{this.isCustomTemplateSelected}}
+              />
+              {{#if @addUsersFromCuratorsTab}}
+                {{!-- TODO | @lkim | Updating `action` to `fn` breaks the flow somehow, but why? --}}
+                <div class="add-users-by-email__curator-advanced-settings">
+                  <Shared::CuratorRoleCheckbox
+                    @onUpdateCuratorRoles={{action (mut this.curatorRoleAssignmentHash)}}
+                    @addUsersFromCuratorsTab={{@addUsersFromCuratorsTab}}
+                  />
+                </div>
+              {{/if}}
+            </Tabs.tabpanel>
+          </ArtdecoTabs>
+        </div>
+      </div>
+    {{/if}}
+  </artdecoModal.artdeco-modal-content>
+  <artdecoModal.artdeco-modal-footer has-divider="true">
+    <p class="add-users-by-email__info t-14
+      {{if this.shouldHighlightLimit "add-users-by-email__info--warning"}}"
+    >
+      {{li-icon type="notify-pebble-icon" size="small"}}
+      <span>{{this.notice}}</span>
+    </p>
+    <ArtdecoButton
+      class="add-users-by-email__cancel"
+      data-control-name="add_users_by_email__cancel"
+      data-test-add-users-by-email-cancel-button
+      @size={{2}}
+      @text={{t "cancel_btn"}}
+      @type="secondary"
+      @color="default"
+      @click={{fn this.tryDismissModal false}} />
+    <ArtdecoButton
+      class="add-users-by-email__confirm"
+      data-control-name="add_users_by_email__confirm"
+      data-test-add-users-by-email-modal-confirm-button
+      @size={{2}}
+      @text={{t "confirm"}}
+      @disabled={{this.isInvalid}}
+      @type="primary"
+      @click={{queue (fn (if @addUsersFromCuratorsTab this.batchAddUsers this.addUsers)) (fn this.fireLegoPrimaryAction)}} />
+  </artdecoModal.artdeco-modal-footer>
+</ArtdecoModal>
