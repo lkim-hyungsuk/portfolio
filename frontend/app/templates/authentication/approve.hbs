@@ -1,0 +1,21 @@
+{{!i18n-resource}}
+{{t-def "English" key="i18n_english"}}
+
+{{page-title "Approve"}}
+
+<header
+  {{hue-web-foundations$divider thick=true inverse=true}}
+  data-test-translate-header
+  class="proposal-list__header"
+>
+  <h2 class="proposal-list__header-title">{{t "i18n_english"}}</h2>
+  <h2
+    data-test-target-language-name
+    class="proposal-list__header-title"
+  >{{this.inlineTranslationApi.targetLanguage}}</h2>
+</header>
+
+<ProposalList
+  @proposalList={{this.currentProposalList}}
+  @onInfiniteScroll={{this.onInfiniteScroll}}
+/>

@@ -1,0 +1,141 @@
+{{i18n-resource}}
+{{t-def "My Proposals" key="i18n_sidebar_my_proposal"}}
+{{t-def "Approve" key="i18n_sidebar_approve"}}
+{{t-def "Translate" key="i18n_sidebar_translate"}}
+{{t-def "Search" key="i18n_sidebar_search"}}
+{{t-def "Refresh" key="i18n_sidebar_refresh"}}
+{{t-def "Language Group" key="i18n_sidebar_language_group"}}
+{{t-def "Leaderboard" key="i18n_sidebar_leaderboard"}}
+{{t-def "Help" key="i18n_sidebar_help"}}
+{{t-def
+  "{:useDarkMode,boolean,true#Light|false#Dark} mode"
+  key="i18n_sidebar_toggle_theme"
+}}
+{{t-def "Navigation bar" key="a11y_sidebar_label"}}
+
+<nav
+  data-test-sidebar-nav
+  class="sidebar-nav"
+  aria-label={{t "a11y_sidebar_label"}}
+>
+  <ul class="sidebar-nav__list">
+    <li data-test-list-item class="sidebar-nav__list-item">
+      <HueWebIcons$Icon
+        data-test-toggle-sidebar
+        class="sidebar-nav__list-item-icon sidebar-nav__list-item-icon--medium"
+        @name="menu"
+        @size="medium"
+        {{on "click" this.toggleSidebar}}
+      />
+    </li>
+    <li data-test-list-item class="sidebar-nav__list-item">
+      <LinkTo @route="authentication.translate">
+        <HueWebIcons$Icon
+          class="sidebar-nav__list-item-icon sidebar-nav__list-item-icon--medium"
+          @name="format-font"
+          @size="medium"
+        />
+        <span class="sidebar-nav__list-item-text">{{t
+            "i18n_sidebar_translate"
+          }}</span>
+      </LinkTo>
+    </li>
+    <li data-test-list-item class="sidebar-nav__list-item">
+      <LinkTo @route="authentication.my-proposals">
+        <HueWebIcons$Icon
+          class="sidebar-nav__list-item-icon sidebar-nav__list-item-icon--medium"
+          @name="home"
+          @size="medium"
+        />
+        <span class="sidebar-nav__list-item-text">{{t
+            "i18n_sidebar_my_proposal"
+          }}</span>
+      </LinkTo>
+    </li>
+    {{#if this.canAccessApprove}}
+      <li data-test-list-item class="sidebar-nav__list-item">
+        <LinkTo data-test-sidebar-nav-approve @route="authentication.approve">
+          <HueWebIcons$Icon
+            class="sidebar-nav__list-item-icon sidebar-nav__list-item-icon--medium"
+            @name="verified"
+            @size="medium"
+          />
+          <span class="sidebar-nav__list-item-text">{{t
+              "i18n_sidebar_approve"
+            }}</span>
+
+        </LinkTo>
+      </li>
+    {{/if}}
+    <li data-test-list-item class="sidebar-nav__list-item">
+      <LinkTo @route="authentication.search" data-test-sidebar-nav-search>
+        <HueWebIcons$Icon
+          class="sidebar-nav__list-item-icon sidebar-nav__list-item-icon--medium"
+          @name="search"
+          @size="medium"
+        />
+        <span class="sidebar-nav__list-item-text">{{t
+            "i18n_sidebar_search"
+          }}</span>
+      </LinkTo>
+    </li>
+    <li
+      data-test-list-item="refresh"
+      class="sidebar-nav__list-item"
+      {{on "click" this.refreshData}}
+    >
+      <HueWebIcons$Icon
+        class="sidebar-nav__list-item-icon"
+        @name="refresh"
+        @size="small"
+      />
+      <span class="sidebar-nav__list-item-text">{{t
+          "i18n_sidebar_refresh"
+        }}</span>
+    </li>
+    {{#if this.isModerator}}
+      <li data-test-list-item="language_group" class="sidebar-nav__list-item">
+        <HueWebIcons$Icon
+          class="sidebar-nav__list-item-icon"
+          @name="group"
+          @size="small"
+        />
+        <span class="sidebar-nav__list-item-text">{{t
+            "i18n_sidebar_language_group"
+          }}</span>
+      </li>
+      <li data-test-list-item class="sidebar-nav__list-item">
+        <HueWebIcons$Icon
+          class="sidebar-nav__list-item-icon sidebar-nav__list-item-icon--medium"
+          @name="analytics-active"
+          @size="medium"
+        />
+        <span class="sidebar-nav__list-item-text">{{t
+            "i18n_sidebar_leaderboard"
+          }}</span>
+      </li>
+    {{/if}}
+    <li data-test-list-item class="sidebar-nav__list-item">
+      <HueWebIcons$Icon
+        class="sidebar-nav__list-item-icon"
+        @name="question"
+        @size="small"
+      />
+      <span class="sidebar-nav__list-item-text">{{t "i18n_sidebar_help"}}</span>
+    </li>
+    <li
+      {{on "click" this.toggleDarkMode}}
+      data-test-list-item="toggleTheme"
+      class="sidebar-nav__list-item"
+    >
+      <HueWebIcons$Icon
+        class="sidebar-nav__list-item-icon"
+        @name="visibility"
+        @size="small"
+      />
+      <span class="sidebar-nav__list-item-text">
+        {{t "i18n_sidebar_toggle_theme" useDarkMode=this.useDarkMode}}
+      </span>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,32 @@
+{{!i18n-resource}}
+{{t-def "Sign out" key="i18n_sign_out"}}
+{{t-def "Sign in" key="i18n_sign_in"}}
+{{t-def "Translate LinkedIn" key="i18n_page_title"}}
+
+<header class="global-nav" data-test-global-nav ...attributes>
+  <div class="global-nav__logo-container">
+    <LinkTo data-test-global-nav-logo @route="authentication">
+      <HueWebIcons$Icon
+        data-test-global-nav-logo
+        class="global-nav__brand-logo"
+        @name="linkedin-bug"
+        @type="logo"
+        @size="large"
+      />
+    </LinkTo>
+    <h4
+      class="global-nav__logo-title"
+      {{hue-web-foundations$text-heading size="large" color="action"}}
+    >
+      {{t "i18n_page_title"}}
+    </h4>
+  </div>
+  <div class="global-nav__content">
+    <a
+      {{hue-web-foundations$text-body weight="default"}}
+      class="global-nav__secondary-link"
+      href={{if @shouldSignIn this.linkedinSignInUrl this.linkedinSignOutUrl}}
+      data-test-global-nav-login-button
+    >{{if @shouldSignIn (t "i18n_sign_in") (t "i18n_sign_out")}}</a>
+  </div>
+</header>

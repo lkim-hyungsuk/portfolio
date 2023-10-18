@@ -1,0 +1,4 @@
+.authentication__empty-state {
+  display: flex;
+  height: calc(100vh - #{$nav-height});
+}

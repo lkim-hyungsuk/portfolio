@@ -1,0 +1,74 @@
+body {
+  background-color: token(color-surface);
+}
+
+/*
+ * First, we import the core HUE Web Foundations file. This file
+ * doesn't add any output to your compiled CSS; still, it's best
+ * to include only once at the top of your application SCSS.
+ */
+@import "@linkedin/hue-web-foundations";
+/*
+  * We now add the Reset Stylesheet for HUE Infra. The Reset
+  * Stylesheet is closely based on normalize.css and only provides
+  * the essentials to smooth out any quirks between browsers.
+  *
+  * If you're used to Art Deco, this reset will be much more
+  * minimal by comparison. If you want styled form elements or
+  * richly formatted text beyond browser defaults, you'll need
+  * to use the respective utilities in HUE Infra libraries. But,
+  * on the other hand, you won't need overly specific selectors
+  * as in Art Deco to override basic form elements if necessary.
+  */
+@import "@linkedin/hue-web-foundations/reset";
+
+/*
+  * The set-token-vars() function outputs all the design tokens
+  * for the given theme and scheme as CSS custom properties.
+  * `:root` is the generally accepted selector for custom
+  * properties that apply globally. This is _usually_ the
+  * `html` tab.
+  */
+:root {
+  @include set-token-vars($theme: "mercado", $scheme: "light");
+}
+
+/*
+  * The color-scheme-classes() function adds style rules so the
+  * Container and Color Scheme modifiers work correctly. The
+  * theme you use here should match the theme used previously.
+  *
+  * Without this, localized color schemes won't work correctly.
+  */
+@include color-scheme-classes("mercado");
+
+/*
+  * Here, we invoke the set-token-vars() function again, this time
+  * using the dark scheme. We've set this up so the dark scheme is
+  * used if the system preferences say so, but you can instead use
+  * a different selector to wrap this call based on how you
+  * surface Dark Mode preferences in your app.
+  *
+  * As with color-scheme-classes(), you should make sure the theme
+  * matches what you provided previously.
+  */
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include set-token-vars($theme: "mercado", $scheme: "dark");
+  }
+}
+
+@import "@linkedin/hue-web-icons";
+@import "css-modules";
+
+// Add custom styling here
+@import "shared/global";
+@import "components/global-nav";
+@import "routes/authentication";
+@import "components/sidebar-nav";
+@import "components/proposal-list-item";
+@import "components/proposal-list";
+@import "components/layout";
+@import "components/search-bar";
+@import "components/vote-proposal-list-item";
+@import "loading";

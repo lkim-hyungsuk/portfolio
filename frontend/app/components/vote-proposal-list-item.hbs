@@ -1,0 +1,95 @@
+{{!i18n-resource}}
+{{t-def
+  "Successfully voted for the proposal."
+  key="i18n_vote_proposal_success"
+}}
+{{t-def
+  "Successfully removed your vote from the proposal."
+  key="i18n_vote_proposal_unvote_success"
+}}
+{{t-def
+  "Successfully approved the proposal."
+  key="i18n_vote_proposal_approve_success"
+}}
+{{t-def
+  "This proposal has already been approved."
+  key="i18n_vote_proposal_approve_already_submitted"
+}}
+{{t-def
+  "Successfully deleted the proposal. Please refresh the page."
+  key="i18n_vote_proposal_delete_success"
+}}
+{{t-def
+  "Something went wrong. Please try again."
+  key="i18n_vote_proposal_error"
+}}
+
+<li
+  {{hue-web-foundations$text-body size="xsmall" color="text-low-emphasis"}}
+  class="vote-proposal__list"
+  ...attributes
+>
+  <ul>
+    {{#each @proposal.variants.variants as |variant|}}
+      <li
+        data-test-vote-proposal-list-item-variant
+        class="vote-proposal__variant-item"
+      >{{variant}}</li>
+    {{/each}}
+  </ul>
+  <div class="vote-proposal__icons">
+    {{#if this.canAccess}}
+      <HueWebButton
+        data-test-vote-approve
+        @circle={{true}}
+        @icon="signal-success"
+        @buttonType={{if
+          (eq this.latestStatus "ACCEPTED")
+          "overlay"
+          "tertiary"
+        }}
+        @disabled={{if (eq this.latestStatus "REJECTED") true}}
+        {{on "click" (fn this.handleTranslationProposal "POST")}}
+      />
+    {{/if}}
+    <HueWebButton
+      data-test-vote-up
+      @circle={{true}}
+      @icon="thumbs-up-fill"
+      @size="medium"
+      @buttonType={{if (eq this.latestVoteType "UP") "overlay" "tertiary"}}
+      {{on "click" (fn this.handleProposalVote "UP")}}
+    />
+    <HueWebButton
+      data-test-vote-down
+      @circle={{true}}
+      @icon="thumbs-down-fill"
+      @size="medium"
+      @buttonType={{if (eq this.latestVoteType "DOWN") "overlay" "tertiary"}}
+      {{on "click" (fn this.handleProposalVote "DOWN")}}
+    />
+    <HueWebButton
+      data-test-vote-report
+      @circle={{true}}
+      @icon="report"
+      @size="medium"
+      @buttonType={{if (eq this.latestVoteType "FLAG") "overlay" "tertiary"}}
+      {{on "click" (fn this.handleProposalVote "FLAG")}}
+    />
+    {{#if this.canAccess}}
+      <HueWebButton
+        data-test-vote-delete
+        @circle={{true}}
+        @icon="trash"
+        @size="medium"
+        @disabled={{if (eq this.latestStatus "ACCEPTED") true}}
+        @buttonType={{if
+          (eq this.latestStatus "REJECTED")
+          "overlay"
+          "tertiary"
+        }}
+        {{on "click" (fn this.handleTranslationProposal "DELETE")}}
+      />
+    {{/if}}
+  </div>
+</li>

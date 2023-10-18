@@ -1,0 +1,22 @@
+{{!i18n-resource}}
+{{t-def
+  "Profile: {:userProfileType,select,MODERATOR#Moderator|CONTRIBUTOR#Contributer|MANAGER#Manager|ADMINISTRATOR#Administrator|CS_USER#Customer support|default#Visitor}"
+  key="i18n_user_profile_type"
+}}
+
+<div ...attributes>
+  <GlobalNav @shouldSignIn={{@shouldSignIn}} />
+  <div class="layout__container">
+    <SidebarNav />
+    <main class="layout__main-content" ...attributes>
+      {{#if this.userProfileType}}
+        <div class="layout__user-profile-section">
+          <h4 data-test-layout-user-profile-section>
+            {{t "i18n_user_profile_type" userProfileType=this.userProfileType}}
+          </h4>
+        </div>
+      {{/if}}
+      {{yield}}
+    </main>
+  </div>
+</div>

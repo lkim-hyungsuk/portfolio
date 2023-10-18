@@ -1,0 +1,82 @@
+{{!i18n-resource}}
+{{t-def
+  "{:errorCode,select,401#Welcome! Please sign in to LinkedIn to proceed|403#You do not have permission to access this page|default#Something went wrong. Please try again later.}"
+  key="i18n_empty_state_headline"
+}}
+{{t-def
+  "{:shouldUpdateLanguage,boolean,true#Please ensure that your language setting on LinkedIn is set to non-English and that you have joined the appropriate language group. Once done, try again.|false#Thank you for helping us translate LinkedIn.}"
+  key="i18n_empty_state_message"
+}}
+{{t-def
+  "Read more language groups"
+  key="i18n_empty_state_secondary_action_text"
+}}
+{{t-def
+  "{:errorCode,select,401#Sign in to LinkedIn|default#Go to Homepage}"
+  key="i18n_empty_state_action_text"
+}}
+{{t-def "Go to Homepage" key="i18n_empty_state_action_text_generic"}}
+{{t-def "Please try again later." key="i18n_empty_state_message_generic"}}
+{{t-def "Something went wrong" key="i18n_empty_state_headline_generic"}}
+
+<Layout @shouldSignIn={{eq this.model.errorCode "401"}}>
+  <div class="authentication__empty-state">
+    {{#let
+      (eq this.model.errorCode "401")
+      (eq this.model.errorCode "403")
+      (eq this.model.errorCode "400")
+      as |shouldSignIn isPermissionDenied shouldSetInterfaceLocale|
+    }}
+      {{#if (or shouldSignIn isPermissionDenied shouldSetInterfaceLocale)}}
+        <HueWebEmptyState
+          data-test-unauthorized-empty-state
+          @type="spot"
+          @size="large"
+          @illustration="main-illustrator"
+          @headline={{t
+            "i18n_empty_state_headline"
+            errorCode=this.model.errorCode
+          }}
+          @message={{t
+            "i18n_empty_state_message"
+            shouldUpdateLanguage=(or
+              isPermissionDenied shouldSetInterfaceLocale
+            )
+          }}
+          @actionText={{t
+            "i18n_empty_state_action_text"
+            errorCode=this.model.errorCode
+          }}
+          @actionButtonType="primary"
+          @url={{if shouldSignIn this.linkedinSignInUrl}}
+          @route={{if
+            (or isPermissionDenied shouldSetInterfaceLocale)
+            "authentication"
+          }}
+          @secondaryActionText={{if
+            isPermissionDenied
+            (t "i18n_empty_state_secondary_action_text")
+          }}
+          @secondaryCtaTarget={{if isPermissionDenied "_blank"}}
+          @secondaryActionButtonType={{if isPermissionDenied "tertiary"}}
+          @secondaryUrl={{if
+            isPermissionDenied
+            "https://iwww.corp.linkedin.com/wiki/cf/pages/viewpage.action?pageId=530464194"
+          }}
+        />
+      {{else}}
+        <HueWebEmptyState
+          data-test-general-error-empty-state
+          @type="spot"
+          @size="large"
+          @illustration="error-crossing"
+          @headline={{t "i18n_empty_state_headline_generic"}}
+          @actionText={{t "i18n_empty_state_action_text_generic"}}
+          @message={{t "i18n_empty_state_message_generic"}}
+          @actionButtonType="primary"
+          @route="authentication"
+        />
+      {{/if}}
+    {{/let}}
+  </div>
+</Layout>

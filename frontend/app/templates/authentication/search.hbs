@@ -1,0 +1,26 @@
+{{!i18n-resource}}
+{{t-def "Search Translations" key="i18n_header_title"}}
+{{t-def "Found {:count,plural,"}}
+{{t-def "Search Results" key="i18n_search_result"}}
+
+{{page-title "Search"}}
+
+<header
+  {{hue-web-foundations$divider thick=true inverse=true}}
+  data-test-translate-header
+  class="proposal-list__header"
+>
+  <h2 class="proposal-list__header-title">{{t "i18n_header_title"}}</h2>
+</header>
+
+<SearchBar @onSubmit={{this.onSubmit}} @isSubmitting={{this.isSubmitting}} />
+
+<h2
+  class="proposal-list__header proposal-list__search-result-header"
+  {{hue-web-foundations$divider thick=true inverse=true}}
+>{{t "i18n_search_result"}}</h2>
+
+<ProposalList
+  @proposalList={{this.currentProposalList}}
+  @onInfiniteScroll={{this.onInfiniteScroll}}
+/>

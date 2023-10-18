@@ -1,0 +1,29 @@
+.global-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  padding: token(dimension-spacing-xsmall) token(dimension-spacing-medium);
+  z-index: 99;
+}
+
+// Keeping the same color for brand logo and text
+.global-nav__logo-title,
+.global-nav__brand-logo {
+  color: white;
+}
+
+.global-nav__logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.global-nav__brand-logo {
+  margin-right: token(dimension-spacing-medium);
+  display: flex;
+}
+
+a.global-nav__secondary-link,
+a.global-nav__secondary-link:visited {
+  color: white;
+}

@@ -1,0 +1,22 @@
+.layout__container {
+  display: flex;
+  background-color: token(color-canvas);
+}
+
+.layout__main-content {
+  background-color: token(color-surface-tint);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.layout__user-profile-section {
+  background-color: token(color-canvas);
+  text-align: end;
+  padding: token(dimension-spacing-xsmall) token(dimension-spacing-medium);
+  width: max-content;
+  align-self: flex-end;
+  position: absolute;
+  z-index: 101;
+  top: 56px;
+}

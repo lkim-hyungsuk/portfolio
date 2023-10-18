@@ -1,0 +1,54 @@
+{{!i18n-resource}}
+{{t-def "Search for English translations" key="i18n_search_bar_english"}}
+{{t-def
+  "Search for {:language} translations"
+  key="i18n_search_bar_target_language"
+}}
+{{t-def "Search for a fingerprint" key="i18n_search_bar_fingerprint"}}
+{{t-def "Search" key="i18n_search_main_cta"}}
+
+<section class="search-bar">
+  <form role="search" {{on "keyup" this.submitSearchCriteria}}>
+    <div class="search-bar__input">
+      <HueWebSearchInput
+        data-test-search-bar-input="english"
+        @label={{t "i18n_search_bar_english"}}
+        {{on
+          "input"
+          (fn this.onChange this.FilterTypeEnum.OriginalTextFilters)
+        }}
+        @onClear={{fn this.clearInput this.FilterTypeEnum.OriginalTextFilters}}
+      />
+    </div>
+    <div class="search-bar__input">
+      <HueWebSearchInput
+        data-test-search-bar-input="target"
+        @label={{t
+          "i18n_search_bar_target_language"
+          language=this.inlineTranslationApi.targetLanguage
+        }}
+        {{on
+          "input"
+          (fn this.onChange this.FilterTypeEnum.ProposalTextFilters)
+        }}
+        @onClear={{fn this.clearInput this.FilterTypeEnum.ProposalTextFilters}}
+      />
+    </div>
+    <div class="search-bar__input">
+      <HueWebSearchInput
+        data-test-search-bar-input="fingerprint"
+        placeholder="Example: 357462l93e09nn5yma5dei784t986"
+        @label={{t "i18n_search_bar_fingerprint"}}
+        {{on "input" (fn this.onChange this.FilterTypeEnum.Fingerprint)}}
+        @onClear={{fn this.clearInput this.FilterTypeEnum.Fingerprint}}
+      />
+    </div>
+    <HueWebButton
+      data-test-main-cta
+      class="search-bar__main-cta"
+      @text={{t "i18n_search_main_cta"}}
+      {{on "click" (fn @onSubmit this.searchFilter)}}
+      @loading={{@isSubmitting}}
+    />
+  </form>
+</section>

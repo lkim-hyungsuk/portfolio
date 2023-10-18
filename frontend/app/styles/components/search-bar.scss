@@ -1,0 +1,14 @@
+.search-bar {
+  margin-bottom: token(dimension-spacing-medium);
+  padding: token(dimension-spacing-medium);
+  display: flex;
+  flex-direction: column;
+}
+
+.search-bar__input {
+  margin-bottom: token(dimension-spacing-large);
+}
+
+.search-bar__main-cta {
+  align-self: flex-end;
+}

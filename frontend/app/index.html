@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>inline-translation-web</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {{content-for "head"}}
+
+    <link rel="stylesheet" href="{{rootURL}}assets/vendor.css" />
+    <auto-import-styles entrypoint="app"></auto-import-styles>
+    <link rel="stylesheet" href="{{rootURL}}assets/inline-translation-web.css" />
+
+    {{content-for "head-footer"}}
+  </head>
+  <body>
+    {{content-for "body"}}
+
+    <script src="{{rootURL}}assets/vendor.js"></script>
+    <script data-embroider-ignore src="{{rootURL}}assets/i18n/support_%LOCALE%.js"></script>
+    <script src="{{rootURL}}assets/inline-translation-web.js"></script>
+
+    {{content-for "body-footer"}}
+  </body>
+</html>
+

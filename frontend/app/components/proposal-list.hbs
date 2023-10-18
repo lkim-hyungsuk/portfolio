@@ -1,0 +1,91 @@
+{{!i18n-resource}}
+{{t-def "More content is loading" key="i18n_loading"}}
+{{t-def "Load More" key="i18n_load_more"}}
+{{t-def "No content" key="i18n_no_content"}}
+{{t-def "English" key="i18n_english"}}
+{{t-def
+  "There are no proposals to show at this moment."
+  key="i18n_empty_state_headline"
+}}
+{{t-def
+  "Something went wrong. Please refresh the page."
+  key="i18n_empty_state_headline_error"
+}}
+{{t-def
+  "Thank you for helping us translate LinkedIn."
+  key="i18n_empty_state_message"
+}}
+
+<div class="proposal-list">
+  {{#if @proposalList.elements.length}}
+    <FiniteScroll
+      @items={{@proposalList.elements}}
+      @onTrigger={{@onInfiniteScroll}}
+      data-test-translate-proposal-list
+      ...attributes
+    >
+      <:content as |contentArgs|>
+        <ul data-test-proposal-list>
+          {{#each contentArgs.items as |item index|}}
+            {{! Wrap each item in an `ItemContainer` to receive a11y benefits }}
+            <contentArgs.ItemContainer
+              class="proposal-list__item-container"
+              @index={{index}}
+            >
+              <ProposalListItem @proposal={{item}} />
+            </contentArgs.ItemContainer>
+          {{/each}}
+        </ul>
+      </:content>
+
+      {{! Provide loading state UI which renders below the content }}
+      <:loader>
+        <div class="proposal-list__load-more-section">
+          <HueWebProgressIndicator aria-label={{t "i18n_loading"}} />
+        </div>
+      </:loader>
+
+      {{! Provide a UI control allowing users to fetch more content as the user scrolls down }}
+      <:load-button as |loadButtonArgs|>
+        {{#unless loadButtonArgs.isLoading}}
+          <div class="proposal-list__load-more-section">
+            <HueWebButton
+              class="proposal-list__load-more-button"
+              data-test-proposal-list-load-more
+              {{on "click" loadButtonArgs.onTrigger}}
+              aria-disabled={{if loadButtonArgs.isLoading "true" "false"}}
+              @size="small"
+              @buttonType="secondary"
+              @text={{t "i18n_load_more"}}
+            />
+          </div>
+        {{/unless}}
+      </:load-button>
+
+      {{! Optionally provide empty container state }}
+      <:empty>
+        {{t "i18n_no_content"}}
+      </:empty>
+    </FiniteScroll>
+  {{else if (eq @proposalList.elements.length 0)}}
+    <HueWebEmptyState
+      data-test-unauthorized-empty-state
+      class="proposal-list__empty-state"
+      @type="spot"
+      @size="large"
+      @illustration="main-illustrator"
+      @headline={{t "i18n_empty_state_headline"}}
+      @message={{t "i18n_empty_state_message"}}
+    />
+  {{else}}
+    <HueWebEmptyState
+      data-test-unauthorized-empty-state
+      @type="spot"
+      @size="large"
+      @illustration="error-construction"
+      @headline={{t "i18n_empty_state_headline_error"}}
+      @message={{t "i18n_empty_state_message"}}
+    />
+  {{/if}}
+
+</div>

@@ -1,0 +1,34 @@
+.vote-proposal {
+  &__variant-item {
+    margin: token(dimension-spacing-xsmall);
+  }
+
+  &__list {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: token(dimension-spacing-small);
+    margin-top: calc(#{token(dimension-spacing-xsmall)} * -1);
+    padding: token(dimension-spacing-xsmall);
+    padding-left: token(dimension-spacing-xsmall);
+
+    &:nth-of-type(odd) {
+      background-color: token(color-canvas);
+    }
+  }
+
+  &__icons {
+    display: flex;
+    flex-wrap: wrap;
+    min-width: max-content;
+
+    // override to 'small' from 'medium'
+    transform: scale(0.6);
+    transform-origin: right;
+  }
+
+  &:nth-of-type(odd) {
+    background-color: token(color-surface-accent-5);
+  }
+}
